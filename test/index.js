@@ -291,7 +291,7 @@ test('mapProps copies propTypes', t => {
   t.is(typeof func.propTypes, 'object')
 })
 
-test.skip('merge deeply merges', t => {
+test('merge deeply merges', t => {
   const result = merge(
     { hello: { hi: 'beep' } },
     { hello: { hey: 'boop' } },

@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import deepmerge from 'deepmerge' // < 1kb payload overhead when lodash/merge is > 3kb.
 
 // PropTypes
 export const propType = PropTypes.oneOfType([
@@ -40,14 +39,21 @@ export const get = (obj, ...paths) => {
 export const themeGet = (path, fallback = null) => props =>
   get(props.theme, path, fallback)
 
-function merge(acc, item) {
-  if (!item) {
-    return acc
+// loosely based on deepmerge package
+export const merge = (a, b) => {
+  if (!b) return a
+  const result = {}
+  for (const key in a) {
+    result[key] = a[key]
   }
-
-  return deepmerge(acc, item, {
-    clone: false, // No need to clone deep, it's way faster.
-  })
+  for (const key in b) {
+    if (!a[key]) {
+      result[key] = b[key]
+    } else {
+      result[key] = merge(a[key], b[key])
+    }
+  }
+  return result
 }
 
 // Style
@@ -70,30 +76,6 @@ function getValue(value, variants, theme) {
     }
   }
   return value
-}
-
-// loosely based on deepmerge package
-export const __merge = (a, b) => {
-  const result = {}
-  for (const key in a) {
-    result[key] = a[key]
-  }
-  for (const key in b) {
-    if (!a[key]) {
-      result[key] = b[key]
-    } else {
-      result[key] = merge(a[key], b[key])
-    }
-  }
-  return result
-}
-
-const mergeAll = (...args) => {
-  let result = {}
-  for (let i = 0; i < args.length; i++) {
-    result = __merge(result, args[i])
-  }
-  return result
 }
 
 function styleFromValue(cssProperties, value, theme, key, transformValue) {
@@ -121,9 +103,7 @@ function getBreakpoints(theme) {
     : defaultBreakpoints
   // TODO deprecate in v5
   if (Array.isArray(breakpoints)) {
-    const clonedBreakpoints = merge([], breakpoints)
-    clonedBreakpoints.unshift(0)
-    return clonedBreakpoints
+    return [ 0, ...breakpoints ]
   }
   return breakpoints
 }

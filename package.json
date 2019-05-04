@@ -1,6 +1,6 @@
 {
   "name": "styled-system",
-  "version": "4.1.1",
+  "version": "4.2.1",
   "description": "Responsive, theme-based style props for building design systems with React",
   "main": "dist/styled-system.cjs.js",
   "module": "dist/styled-system.esm.js",
@@ -65,6 +65,11 @@
       "bench",
       "examples",
       "packages/**/*"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary",
+      "html"
     ]
   },
   "bundlesize": [

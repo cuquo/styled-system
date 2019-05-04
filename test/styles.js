@@ -40,7 +40,7 @@ test('returns raw color values', t => {
 //     backgroundColor: 'tomato',
 //     bg: 'blue',
 //   })
-//   t.deepEqual(a, [{ backgroundColor: 'tomato' }])
+//   t.deepEqual(a, { backgroundColor: 'tomato' })
 // })
 
 test('returns a pixel font-size', t => {

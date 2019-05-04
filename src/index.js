@@ -20,7 +20,6 @@ const negative = n => n < 0
 
 // Media
 const getBreakpoint = (breakpoints, breakpoint) => {
-  console.log(breakpoints, breakpoint)
   const value = breakpoints[breakpoint]
   if (value === undefined) return false
   return value !== 0 ? value : null
@@ -71,6 +70,30 @@ function getValue(value, variants, theme) {
     }
   }
   return value
+}
+
+// loosely based on deepmerge package
+export const __merge = (a, b) => {
+  const result = {}
+  for (const key in a) {
+    result[key] = a[key]
+  }
+  for (const key in b) {
+    if (!a[key]) {
+      result[key] = b[key]
+    } else {
+      result[key] = merge(a[key], b[key])
+    }
+  }
+  return result
+}
+
+const mergeAll = (...args) => {
+  let result = {}
+  for (let i = 0; i < args.length; i++) {
+    result = __merge(result, args[i])
+  }
+  return result
 }
 
 function styleFromValue(cssProperties, value, theme, key, transformValue) {

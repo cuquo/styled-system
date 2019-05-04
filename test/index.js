@@ -9,7 +9,8 @@ import {
   num,
   cloneFunction,
   mapProps,
-} from '../src/index'
+  merge,
+} from '../src'
 
 const width = style({
   prop: 'width',
@@ -288,4 +289,17 @@ test('mapProps copies propTypes', t => {
   const margin = style({ prop: 'margin' })
   const func = mapProps(props => props)(margin)
   t.is(typeof func.propTypes, 'object')
+})
+
+test.skip('merge deeply merges', t => {
+  const result = merge(
+    { hello: { hi: 'beep' } },
+    { hello: { hey: 'boop' } },
+  )
+  t.deepEqual(result, {
+    hello: {
+      hi: 'beep',
+      hey: 'boop',
+    }
+  })
 })

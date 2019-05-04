@@ -23,7 +23,7 @@ const getBabelOptions = ({ useESModules }) => ({
 export default [
   {
     input,
-    output: { file: `dist/styled-system.umd.js`, format: 'umd', name },
+    output: { file: `dist/index.umd.js`, format: 'umd', name },
     plugins: [
       nodeResolve(),
       commonjs(),
@@ -33,7 +33,7 @@ export default [
   },
   {
     input,
-    output: { file: 'dist/styled-system.min.js', format: 'umd', name },
+    output: { file: 'dist/index.min.js', format: 'umd', name },
     plugins: [
       nodeResolve(),
       commonjs(),

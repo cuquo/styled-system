@@ -11,7 +11,7 @@ import {
   textStyle,
   colorStyle,
   borders,
-} from '../src/index'
+} from '../src'
 
 const theme = {
   colors: {
@@ -34,14 +34,13 @@ test('returns raw color values', t => {
   t.deepEqual(a, { color: 'inherit', backgroundColor: 'tomato' })
 })
 
-// Impossible to ensure, due to perf issues
-// test('backgroundColor prop overrides bg prop', t => {
-//   const a = color({
-//     backgroundColor: 'tomato',
-//     bg: 'blue',
-//   })
-//   t.deepEqual(a, { backgroundColor: 'tomato' })
-// })
+test('backgroundColor prop overrides bg prop', t => {
+  const a = color({
+    backgroundColor: 'tomato',
+    bg: 'blue',
+  })
+  t.deepEqual(a, { backgroundColor: 'tomato' })
+})
 
 test('returns a pixel font-size', t => {
   const a = fontSize({ fontSize: 48 })
@@ -120,9 +119,9 @@ test('returns responsive values', t => {
     m: [0, 2, 3],
   })
   t.deepEqual(styles, {
-    margin: 0,
-    '@media screen and (min-width: 40em)': { margin: '8px' },
-    '@media screen and (min-width: 52em)': { margin: '16px' },
+      margin: 0,
+      '@media screen and (min-width: 40em)': { margin: '8px' },
+      '@media screen and (min-width: 52em)': { margin: '16px' },
   })
 })
 
@@ -174,7 +173,6 @@ test('pl prop sets paddingLeft 0', t => {
   t.deepEqual(styles, { paddingLeft: 0 })
 })
 
-// The order of props matters
 test('px prop overrides pl prop', t => {
   const styles = space({
     pl: 1,
@@ -183,7 +181,6 @@ test('px prop overrides pl prop', t => {
   t.deepEqual(styles, { paddingLeft: '8px', paddingRight: '8px' })
 })
 
-// The order of props matters
 test('py prop overrides pb prop', t => {
   const styles = space({
     pb: 1,
@@ -192,7 +189,6 @@ test('py prop overrides pb prop', t => {
   t.deepEqual(styles, { paddingTop: '8px', paddingBottom: '8px' })
 })
 
-// The order of props matters
 test('mx prop overrides mr prop', t => {
   const styles = space({
     mr: 1,
@@ -201,7 +197,6 @@ test('mx prop overrides mr prop', t => {
   t.deepEqual(styles, { marginLeft: '8px', marginRight: '8px' })
 })
 
-// The order of props matters
 test('my prop overrides mt prop', t => {
   const styles = space({
     mt: 1,
@@ -210,7 +205,6 @@ test('my prop overrides mt prop', t => {
   t.deepEqual(styles, { marginTop: '8px', marginBottom: '8px' })
 })
 
-// The order of props matters
 test('margin overrides m prop', t => {
   const styles = space({
     m: 1,

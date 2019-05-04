@@ -1,12 +1,13 @@
 import test from 'ava'
 import {
   style,
-  compose,
-  variant,
   get,
   themeGet,
   is,
   num,
+  px,
+  compose,
+  variant,
   cloneFunction,
   mapProps,
   merge,
@@ -63,17 +64,16 @@ test('handles aliased props', t => {
   })
 })
 
-// Impossible to ensure, due to perf issues
-// test('long form prop trumps aliased props', t => {
-//   const style = backgroundColor({
-//     theme,
-//     backgroundColor: 'black',
-//     bg: 'blue',
-//   })
-//   t.deepEqual(style, {
-//     backgroundColor: '#111',
-//   })
-// })
+test('long form prop trumps aliased props', t => {
+  const style = backgroundColor({
+    theme,
+    backgroundColor: 'black',
+    bg: 'blue',
+  })
+  t.deepEqual(style, {
+    backgroundColor: '#111',
+  })
+})
 
 test('returns null', t => {
   const style = color({})
@@ -85,7 +85,7 @@ test('returns 0', t => {
   t.deepEqual(style, { width: 0 })
 })
 
-test('returns merged object of responsive styles', t => {
+test('returns an array of responsive style objects', t => {
   const style = width({
     width: ['100%', '50%'],
   })
@@ -95,7 +95,7 @@ test('returns merged object of responsive styles', t => {
   })
 })
 
-test('returns merged object of responsive styles for all breakpoints', t => {
+test('returns an array of responsive style objects for all breakpoints', t => {
   const style = width({
     width: ['100%', '75%', '50%', '33%', '25%'],
   })
@@ -117,32 +117,16 @@ test('skips undefined responsive values', t => {
   })
 })
 
-// Previous object parsing test
-// test('parses object values', t => {
-//   const style = width({
-//     width: {
-//       _: '100%',
-//       2: '50%',
-//     },
-//   })
-//   t.deepEqual(style, {
-//     width: '100%',
-//     '@media screen and (min-width: 64em)': { width: '50%' },
-//   })
-// })
-
-// Object parsing work as expected...
-// Previous behaviour was kind of buggy for me
 test('parses object values', t => {
   const style = width({
     width: {
-      0: '100%',
-      1: '50%',
+      _: '100%',
+      2: '50%',
     },
   })
   t.deepEqual(style, {
     width: '100%',
-    '@media screen and (min-width: 40em)': { width: '50%' },
+    '@media screen and (min-width: 64em)': { width: '50%' },
   })
 })
 
@@ -291,7 +275,7 @@ test('mapProps copies propTypes', t => {
   t.is(typeof func.propTypes, 'object')
 })
 
-test.skip('merge deeply merges', t => {
+test('merge deeply merges', t => {
   const result = merge(
     { hello: { hi: 'beep' } },
     { hello: { hey: 'boop' } },

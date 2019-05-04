@@ -2,8 +2,8 @@
   "name": "styled-system",
   "version": "4.2.1",
   "description": "Responsive, theme-based style props for building design systems with React",
-  "main": "dist/styled-system.cjs.js",
-  "module": "dist/styled-system.esm.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
   "sideEffects": false,
   "scripts": {
     "prepare": "rollup -c",
